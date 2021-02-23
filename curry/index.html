@@ -7,9 +7,36 @@
 <body>
 </body>
 <script>
+  // function add(a, b, c) {
+  //   console.log('-add---', a,b,c)
+  //   return a+b+c
+  // }
+
+  // function curry(func) {
+  //   var argsNum = func.length
+  //   var allArgs = []
+
+  //   return function() {
+  //     var argList = [].slice.call(arguments)
+  //     allArgs = allArgs.concat(...argList)
+  //     console.log('-allArgs---', allArgs, argList)
+  //     if(allArgs.length >= argsNum) {
+  //       return func.apply(null, allArgs)
+  //     } else {
+  //       return arguments.callee
+  //     }
+  //   }
+  // }
+
+  // var addc = curry(add)
+  // console.log('1---', addc(3, 6)(1))
+
+
+  /***********不限参数个数（重写toString函数）**********/
   function add(a, b, c) {
     console.log('-add---', a,b,c)
-    return a+b+c
+    var args = [].slice.call(arguments)
+    return args.reduce((c, p) => c+p)
   }
 
   function curry(func) {
@@ -20,16 +47,21 @@
       var argList = [].slice.call(arguments)
       allArgs = allArgs.concat(...argList)
       console.log('-allArgs---', allArgs, argList)
-      if(allArgs.length >= argsNum) {
+
+      arguments.callee.toString = () => {
         return func.apply(null, allArgs)
-      } else {
-        return arguments.callee
       }
+      // if(allArgs.length >= argsNum) {
+      //   return func.apply(null, allArgs)
+      // } else {
+      //   return arguments.callee
+      // }
+      return arguments.callee
     }
   }
 
   var addc = curry(add)
-  console.log('1---', addc(3, 6)(1))
+  console.log('1---', addc(3, 6)(1)(3)(454), addc(3, 6)(1)(3)(454) + 1)
 </script>
 
 </html>
