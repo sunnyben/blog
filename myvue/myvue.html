@@ -1,0 +1,119 @@
+<html>
+
+<head>
+  <title>myvue</title>
+</head>
+
+<body>
+  <div id='app'>{{message}}</div>
+  <input type="text" v-model='message' />
+</body>
+<script>
+  function observe(data, $el) {
+    if (typeof data !== 'object') {
+      return
+    }
+    for (let key in data) {
+      observe(data[key])
+
+      var val = data[key]
+
+      var dep = new Dep()
+
+      Object.defineProperty(data, key, {
+        get() {
+          console.log(1111)
+          dep.depend()
+          return val
+        },
+        set(newValue) {
+          dep.notify(newValue)
+          return newValue
+        }
+      })
+    }
+  }
+
+  function Dep() {
+    this.list = []
+
+    this.depend = function() {
+      if(Dep.target) {
+        this.list.push(Dep.target)
+      }
+    }
+
+    this.notify = function(newValue) {
+      this.list.forEach((_) => {
+        _.update(newValue)
+      })
+    }
+
+  }
+
+  Dep.target = null
+
+  function Watcher(vm, key, cb) {
+    this.vm = vm
+    this.key = key
+    this.cb = cb
+    this.get = function () {
+      Dep.target = this
+      var val = this.vm.data[this.key]
+      Dep.target = null
+      return val
+    }
+
+    this.val = this.get()
+
+    this.update = function (newValue) {
+      this.cb.call(this.vm, newValue)
+    }
+
+    
+
+  }
+
+  function MyVue(options) {
+    var $el = document.querySelector(options.el)
+    this.data = options.data()
+    $el.innerHTML = this.data.message
+
+    observe(this.data, $el)
+
+    // setTimeout(() => {
+    //   this.data.message = 'bbb'
+    // }, 3000)
+
+    const input = document.querySelector('input')
+    input.addEventListener('input', (e) => {
+      this.data.message = e.target.value
+      console.log('---this.data.message---333---', this.data.message, e.target.value)
+    })
+
+    new Watcher(this, 'message', function (newValue) {
+      $el.innerHTML = newValue
+    })
+
+    new Watcher(this, 'message', function (newValue) {
+      console.log('-34432---', newValue)
+    })
+
+  }
+  new MyVue({
+    el: '#app',
+    data() {
+      return {
+        message: 'aaa'
+      }
+    }
+  })
+
+
+
+
+
+
+</script>
+
+</html>
