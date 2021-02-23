@@ -1,0 +1,48 @@
+<html>
+
+<head>
+  <title>inherit-实现继承</title>
+</head>
+
+<body>
+  <div>实现继承</div>
+</body>
+<script>
+  function Parent() {
+    this.a = 2
+  }
+
+  Parent.prototype.a = 3
+
+  function Child() {
+    Parent.call(this)
+    this.b = 1
+  }
+
+  var obj = Object.create(null)
+
+  // obj.prototype = parent.prototype
+
+  // child.prototype = obj
+
+  // 方式一
+  // Child.prototype = new Parent()
+
+  // 方式二
+  // function child() {
+  //     parent.call(this)
+  //     this.b = 1
+  // }
+
+  // 方式三（寄生组合）
+  let bridging = Object.create(Parent.prototype)
+  Child.prototype = bridging
+  bridging.constructor = Child
+
+  var child1 = new Child()
+  // child1.__proto__.constructor
+  console.log('---child1--', child1.a, child1.b, child1 instanceof Child, Child.prototype)
+
+</script>
+
+</html>

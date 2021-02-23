@@ -1,0 +1,35 @@
+<html>
+
+<head>
+  <title>cuury-函数柯里化</title>
+</head>
+
+<body>
+</body>
+<script>
+  function add(a, b, c) {
+    console.log('-add---', a,b,c)
+    return a+b+c
+  }
+
+  function curry(func) {
+    var argsNum = func.length
+    var allArgs = []
+
+    return function() {
+      var argList = [].slice.call(arguments)
+      allArgs = allArgs.concat(...argList)
+      console.log('-allArgs---', allArgs, argList)
+      if(allArgs.length >= argsNum) {
+        return func.apply(null, allArgs)
+      } else {
+        return arguments.callee
+      }
+    }
+  }
+
+  var addc = curry(add)
+  console.log('1---', addc(3, 6)(1))
+</script>
+
+</html>
