@@ -8,8 +8,8 @@ auto(); // 自动打开无障碍服务
 unlockMiui()
 
 maid.sleep(3);
-toast("打开应用");
-app.launch("com.tencent.mm");
+toast("打开京东");
+app.launch("com.jingdong.app.mall");
 
 maid.sleep(2);
 

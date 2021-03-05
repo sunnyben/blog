@@ -47,6 +47,8 @@ module.exports = {
   entry: {
     xwTest: './launchWx/xwTest.js',
     tbTest: './launchWx/tbTest.js',
+    jdTest: './launchWx/jdTest.js',
+    zfbTest: './launchWx/zfbTest.js',
   },
   output: {
     filename: resBaseUrl + 'js/[name].bundle.js?v=' + new Date().getTime(),
