@@ -15,15 +15,23 @@ function enterWechatMoment() {
   //     sleep(100);
   // }
 
-  sleep(50);
+  sleep(1000);
   toast("点微信 发现");
   // 点微信 发现
   click(600,2300);
-  sleep(50);
+  sleep(1000);
 
   // 点朋友圈入口
   click(300,300);
   sleep(1000);
+
+  // 打开点赞弹窗
+  id('com.tencent.mm:id/kn').findOne(2000).click()
+
+  sleep(1000);
+
+  // 关闭点赞弹窗
+  id('com.tencent.mm:id/kn').findOne(2000).click()
 }
 
 // 截图准备
@@ -112,7 +120,7 @@ function start(){
 
   // 确保进入微信朋友圈
   enterWechatMoment();
-  prepare();
+  // prepare();
 
 }
 start();

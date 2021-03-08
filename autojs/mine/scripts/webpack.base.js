@@ -45,6 +45,9 @@ module.exports = {
   mode: 'development',
   // mode: 'production',
   entry: {
+    launchWX: './launchWx/launchWX.js',
+    wxSendMsg: './launchWx/wxSendMsg.js',
+    daxian688: './launchWx/daxian688.js',
     xwTest: './launchWx/xwTest.js',
     tbTest: './launchWx/tbTest.js',
     jdTest: './launchWx/jdTest.js',

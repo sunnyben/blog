@@ -102,3 +102,49 @@ export const getCaptureImg = () => {
      return img0;
   }
 }
+
+export const clickCenter = function (widget) {
+  if (!widget)
+      return false;
+  let rect = widget.bounds();
+  return click(rect.centerX(), rect.centerY());
+};
+
+export const clickSelectorCenter = function (selector) {
+  if (!selector)
+      return false;
+  let widget = selector.findOne(2000);
+  return clickCenter(widget);
+};
+
+// 滑动查找组件
+export const swipeToFindWidget = (selector, times = 10) => {
+  let i = 0;
+  let target = null;
+  while(i < times) {
+    target = selector.findOne(1000)
+    if(target) {
+      break;
+    }
+    swipe(500, 2000, 500, 300, 200)
+    sleep(500)
+    i++
+  }
+  return target
+}
+
+export const registEvent = (keyCode = "volume_down") => {
+  //启用按键监听
+  events.observeKey();
+  //监听音量上键按下
+  events.onKeyDown(keyCode, function(event){
+      toast("脚本手动退出");
+      exit();
+  });
+}
+
+export const doubleClickLocation = (x, y) => {
+  click(x, y);
+  sleep(20);
+  click(x, y);
+}
