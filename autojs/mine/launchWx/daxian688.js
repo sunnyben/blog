@@ -1,22 +1,22 @@
 import { clickSelectorCenter, swipeToFindWidget, clickCenter, 
-  registEvent, doubleClickLocation } from './utils'
+  registEvent, doubleClickLocation, unlockMiui } from './utils'
 
 registEvent()
 
-app.launch("com.tencent.mm");
+unlockMiui()
+
 sleep(1000);
+app.launch("com.tencent.mm");
 
+sleep(1000);
 toast("返回到微信主界面");
-
 // 点击微信按钮
 click(50, 2300);
 // while(!click("微信"));
-sleep(1000);
 
-// 两次双击回到顶部
-doubleClickLocation(50, 2300)
 sleep(1000);
-doubleClickLocation(50, 2300)
+// 两次双击回到顶部
+doubleClickLocation(500, 100)
 
 // 打开小程序页面
 sleep(1000);
@@ -35,28 +35,40 @@ sleep(500);
 clickSelectorCenter(text("大仙688"))
 
 
-// 点击我的
-sleep(1000);
-click(920, 2250)
+// 签到
+const signIn = () => {
+  // 点击我的
+  sleep(1000);
+  click(920, 2250)
 
-// 点击签到
-sleep(500);
-clickSelectorCenter(text("签到"))
+  // 已签到时退出
+  if(text("已签到").findOne(1000)) {
+    toast("已完成签到");
+    return
+  }
 
-// 点击允许
-sleep(500);
-clickSelectorCenter(text("允许"))
+  // 点击签到
+  sleep(500);
+  clickSelectorCenter(text("签到"))
 
-// 点击仙玩法
-sleep(1000);
-click(680, 2250)
+  // 点击允许
+  sleep(500);
+  clickSelectorCenter(text("允许"))
+}
 
 // 去观看
 const toWatchVideo = () => {
   // 观看视频 706 1292
   sleep(500);
   // clickSelectorCenter(text("去观看 0/2"))
-  clickSelectorCenter(className('android.view.View').textStartsWith('去观看'))
+  const selector = className('android.view.View').textMatches(/去观看 \d\/2/)
+  if(!selector.exists()) {
+    toast("已完成观看");
+    return
+  }
+  toast("开始执行观看");
+
+  clickSelectorCenter(selector)
 
   // 点击第一个视频
   sleep(500);
@@ -84,9 +96,16 @@ const toRead = () => {
   sleep(500);
   // clickSelectorCenter(text("去阅读 0/2"))
 
-  clickSelectorCenter(className('android.view.View').textStartsWith('去阅读'))
+  const flag = clickSelectorCenter(className('android.view.View').textStartsWith('去阅读'))
   // if (id("tv_item_label").textMatches(/已签\d+天/).exists()) return true;
   
+  if(!flag) {
+    toast("已完成阅读");
+    return 
+  }
+
+  toast("开始执行阅读");
+
   // 点击第一个
   sleep(500);
   click(600, 900)
@@ -108,6 +127,65 @@ const toRead = () => {
   back()
 }
 
+// 去评论
+const toComment = () => {
+  sleep(500);
+  const flag = clickSelectorCenter(className('android.view.View').textStartsWith('去评论'))
+
+  if(!flag) {
+    toast("已完成评论");
+    return 
+  }
+  toast("开始执行评论");
+
+  // 点击输入按钮
+  sleep(500);
+  click(600, 2280)
+
+  // 写留言
+  sleep(1000);
+  // const isSuccess = setText("lala")\
+  const isSuccess = input("haha")
+  toast("输入--" + isSuccess);
+
+  sleep(1000);
+  clickSelectorCenter(text('提交'))
+
+  // 返回
+  sleep(2000);
+  back()
+}
+
+// 观看直播
+const toWatchLive = () => {
+  // 观看视频 706 1292
+  sleep(500);
+  // clickSelectorCenter(text("去观看 0/2"))
+  const selector = className('android.view.View').textMatches(/去观看 \d\/1/)
+  if(!selector.exists()) {
+    toast("已完成直播");
+    return
+  }
+  toast("开始执行直播");
+
+  clickSelectorCenter(selector)
+
+  // 点击允许
+  sleep(500);
+  clickSelectorCenter(text('允许'))
+
+  // 返回
+  sleep(2000);
+  back()
+}
+
+// 签到
+signIn()
+
+// 点击仙玩法
+sleep(1000);
+click(680, 2250)
+
 // 去观看
 toWatchVideo()
 
@@ -115,8 +193,14 @@ toWatchVideo()
 toRead()
 
 // 去评论  706 1740
+toComment()
 
-// 去观看 706  1965
+// 去观看直播 706  1965
+toWatchLive()
+
+// 返回微信
+sleep(1000);
+back()
 
 sleep(1000);
 exit()
