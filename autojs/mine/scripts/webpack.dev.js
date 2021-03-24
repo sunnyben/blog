@@ -18,7 +18,7 @@ const devConfig = {
   // 监听
   watch: true,
   watchOptions: {
-    poll: 1, // 每秒询问多少次
+    poll: 1000, // 每秒询问多少次
     aggregateTimeout: 500,  //防抖 多少毫秒后再次触发
     ignored: /(node_modules|dist|dist_dev|scripts)/ //忽略时时监听
   },

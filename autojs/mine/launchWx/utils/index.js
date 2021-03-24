@@ -30,116 +30,135 @@ export const unlockMiui = () => {
   }
 }
 
+// 清除所有应用
+export const closeAllApp = () => {
+  // 打开应用管理手势
+  sleep(1000);
+  gesture(1000, [540, 2330], [540, 1840], [540, 1840], [540, 1840])
+
+  sleep(1000);
+  clickSelectorCenter(id("com.miui.home:id/clearAnimView"))
+}
+
+
 // 点击文字元素
-export const clickByTextDesc = (energyType,paddingY) => {
+export const clickByTextDesc = (energyType, paddingY) => {
   var clicked = false;
-  if(descEndsWith(energyType).exists()){
-      descEndsWith(energyType).find().forEach(function(pos){
-          var posb=pos.bounds();
-          if(posb.centerX()<0 || posb.centerY()-paddingY<0){
-              return false;
-          }
-          //toastLog(pos.id());
-          var str = pos.id();
-          if(str != null){
-              if(str.search("search") == -1){
-                  click(posb.centerX(),posb.centerY()-paddingY);
-                   //toastLog("get it 1");
-                   clicked = true;   
-              }
-          }else{
-              click(posb.centerX(),posb.centerY()-paddingY);
-              //toastLog("get it 2");
-              clicked = true;
-          }
-          sleep(100);
-      });
+  if (descEndsWith(energyType).exists()) {
+    descEndsWith(energyType).find().forEach(function (pos) {
+      var posb = pos.bounds();
+      if (posb.centerX() < 0 || posb.centerY() - paddingY < 0) {
+        return false;
+      }
+      //toastLog(pos.id());
+      var str = pos.id();
+      if (str != null) {
+        if (str.search("search") == -1) {
+          click(posb.centerX(), posb.centerY() - paddingY);
+          //toastLog("get it 1");
+          clicked = true;
+        }
+      } else {
+        click(posb.centerX(), posb.centerY() - paddingY);
+        //toastLog("get it 2");
+        clicked = true;
+      }
+      sleep(100);
+    });
   }
-  
-  if(textEndsWith(energyType).exists() && clicked == false){
-      textEndsWith(energyType).find().forEach(function(pos){
-          var posb=pos.bounds();
-          if(posb.centerX()<0 || posb.centerY()-paddingY<0){
-              return false;
-          }
-          //toastLog(pos.id());
-          var str = pos.id();
-          if(str != null){
-              if(str.search("search") == -1){
-                  click(posb.centerX(),posb.centerY()-paddingY); 
-                  //toastLog("get it 3"); 
-                  clicked = true;  
-              }
-          }else{
-              click(posb.centerX(),posb.centerY()-paddingY);
-              //toastLog("get it 4");
-              clicked = true;
-          }
-          sleep(100);
-      });
+
+  if (textEndsWith(energyType).exists() && clicked == false) {
+    textEndsWith(energyType).find().forEach(function (pos) {
+      var posb = pos.bounds();
+      if (posb.centerX() < 0 || posb.centerY() - paddingY < 0) {
+        return false;
+      }
+      //toastLog(pos.id());
+      var str = pos.id();
+      if (str != null) {
+        if (str.search("search") == -1) {
+          click(posb.centerX(), posb.centerY() - paddingY);
+          //toastLog("get it 3"); 
+          clicked = true;
+        }
+      } else {
+        click(posb.centerX(), posb.centerY() - paddingY);
+        //toastLog("get it 4");
+        clicked = true;
+      }
+      sleep(100);
+    });
   }
-  
+
   return clicked;
 }
 
 
 //获取截图
-export const getCaptureImg = () => {    
+export const getCaptureImg = () => {
   //captureScreen("/storage/emulated/0/DCIM/Screenshots/1.png");
   //sleep(500);
-  if(!requestScreenCapture()){
-      toast("toast-请求截图失败");
-      exit();
+  if (!requestScreenCapture()) {
+    toast("toast-请求截图失败");
+    exit();
   }
 
   toast("toast-截图开始");
   var img0 = captureScreen();
   sleep(100);
-  if(img0==null || typeof(img0)=="undifined"){
-      toastLog("截图失败,脚本退出");
-      exit();
-  }else{
-     return img0;
+  if (img0 == null || typeof (img0) == "undifined") {
+    toastLog("截图失败,脚本退出");
+    exit();
+  } else {
+    return img0;
   }
 }
 
 export const clickCenter = function (widget) {
   if (!widget)
-      return false;
+    return false;
   let rect = widget.bounds();
   return click(rect.centerX(), rect.centerY());
 };
 
 export const clickSelectorCenter = function (selector) {
   if (!selector)
-      return false;
+    return false;
   let widget = selector.findOne(2000);
   return clickCenter(widget);
 };
 
 // 滑动查找组件
-export const swipeToFindWidget = (selector, times = 10) => {
+export const swipeToFindWidget = (selector, times = 10, dir = 1) => {
   let i = 0;
   let target = null;
-  while(i < times) {
+  while (i < times) {
     target = selector.findOne(1000)
-    if(target) {
+    if (target) {
       break;
     }
-    swipe(500, 2000, 500, 300, 200)
+    if (dir == 1) {
+      swipe(500, 2000, 500, 300, 200)
+    } else {
+      swipe(500, 300, 500, 2000, 200)
+    }
+
     sleep(500)
     i++
   }
   return target
 }
 
-export const registEvent = (keyCode = "volume_down") => {
-  //启用按键监听
-  events.observeKey();
-  //监听音量上键按下
-  events.onKeyDown(keyCode, function(event){
+// 脚本手动退出
+export const registEvent = (keyCode = "volume_up") => {
+  threads.start(function () {
+    //启用按键监听
+    events.observeKey();
+    //监听音量上键按下
+    events.onKeyDown(keyCode, function (event) {
       toast("脚本手动退出");
       exit();
+    });
   });
 }
 

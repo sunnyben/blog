@@ -38,7 +38,8 @@ clickSelectorCenter(text("大仙688"))
 // 签到
 const signIn = () => {
   // 点击我的
-  sleep(1000);
+  sleep(2000);
+  toast("进入签到页面");
   click(920, 2250)
 
   // 已签到时退出
@@ -144,9 +145,17 @@ const toComment = () => {
 
   // 写留言
   sleep(1000);
-  // const isSuccess = setText("lala")\
+  // const isSuccess = setText("lala")
   const isSuccess = input("haha")
   toast("输入--" + isSuccess);
+
+  // 第二次输入
+  sleep(1000);
+  input("haha22")
+
+  // 第三次输入
+  sleep(1000);
+  input("haha33")
 
   sleep(1000);
   clickSelectorCenter(text('提交'))
@@ -186,9 +195,16 @@ signIn()
 sleep(1000);
 click(680, 2250)
 
+// let stepNum = 4
+// let stepIndex = 0
+
+// while(stepIndex < stepNum) {
+
+// }
+
 // 去观看
 toWatchVideo()
-
+ 
 // 去阅读 706  1514
 toRead()
 
