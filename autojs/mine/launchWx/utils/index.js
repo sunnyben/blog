@@ -26,7 +26,16 @@ export const unlockMiui = () => {
     sleep(1000);
 
     // 执行密码手势
-    gesture(1000, [241, 1225], [236, 1457], [554, 1457], [798, 1457], [796, 1780])
+    const redmi_k20pro = [[241, 1225], [236, 1457], [554, 1457], [798, 1457], [796, 1780]]
+    const redmi_10x = [[241, 1425], [236, 1657], [554, 1657], [798, 1657], [796, 1980]]
+
+    let currentGesture = redmi_k20pro
+    if (device.model === 'M2003J15SC') {
+      currentGesture = redmi_10x
+    }
+    log('currentGesture--', currentGesture)
+
+    gesture(1000, ...currentGesture)
   }
 }
 
@@ -166,4 +175,42 @@ export const doubleClickLocation = (x, y) => {
   click(x, y);
   sleep(20);
   click(x, y);
+}
+
+export const deviceInfoLog = () => {
+  log('device.width---', device.width)
+  log('device.height---', device.height)
+  log('device.brand---', device.brand)
+  log('device.device---', device.device)
+  log('device.model---', device.model)
+  log('device.product---', device.product)
+}
+
+// 是否非工作日
+export const checkHoliday = () => {
+  const holidayList = [
+    '1-1','1-2','1-3',
+    '4-3','4-4','4-5',
+    '5-1','5-2','5-3','5-4','5-5',
+    '6-12','6-13','6-14',
+    '9-19','9-20','9-21',
+    '10-1','10-2','10-3','10-4','10-5','10-6','10-7', 
+  ]
+  const wordWeekend = [
+    '4-25', '5-8','9-18','9-26','10-9'
+  ]
+  const today = new Date()
+
+  const todayStr = `${today.getMonth() + 1}-${today.getDate()}`
+  if(holidayList.indexOf(todayStr) !== -1) {
+    return true
+  }
+  if(wordWeekend.indexOf(todayStr) !== -1) {
+    return false
+  }
+  const weekDay = today.getDay()
+  if(weekDay === 0 || weekDay === 6) {
+    return true
+  }
+  return false
 }

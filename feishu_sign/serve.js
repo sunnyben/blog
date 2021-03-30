@@ -50,139 +50,139 @@ db.run("CREATE TABLE IF NOT EXISTS t_user (id TEXT unique, name TEXT)");
 // 添加列
 //db.run("ALTER TABLE t_user ADD COLUMN create_time varchar(255)")
 
-for (const [routeName, routeController] of Object.entries(routes)) {
-	if (routeController.getAll) {
-		app.get(
-			`/testApi/${routeName}`,
-			makeHandlerAwareOfAsyncErrors(routeController.getAll)
-		);
-	}
-	if (routeController.getAllData) {
-		app.get(
-			`/testApi/${routeName}/getAllData`,
-			makeHandlerAwareOfAsyncErrors(routeController.getAllData)
-		);
-	}
-	if (routeController.getById) {
-		app.get(
-			`/testApi/${routeName}/getById`,
-			makeHandlerAwareOfAsyncErrors(routeController.getById)
-		);
-	}
-	if (routeController.create) {
-		app.post(
-			`/testApi/${routeName}/create`,
-			makeHandlerAwareOfAsyncErrors(routeController.create)
-		);
-  }
-  if (routeController.update) {
-		app.post(
-			`/testApi/${routeName}/update`,
-			makeHandlerAwareOfAsyncErrors(routeController.update)
-		);
-  }
-  if (routeController.del) {
-		app.post(
-			`/testApi/${routeName}/del`,
-			makeHandlerAwareOfAsyncErrors(routeController.del)
-		);
-	}
+// for (const [routeName, routeController] of Object.entries(routes)) {
+// 	if (routeController.getAll) {
+// 		app.get(
+// 			`/testApi/${routeName}`,
+// 			makeHandlerAwareOfAsyncErrors(routeController.getAll)
+// 		);
+// 	}
+// 	if (routeController.getAllData) {
+// 		app.get(
+// 			`/testApi/${routeName}/getAllData`,
+// 			makeHandlerAwareOfAsyncErrors(routeController.getAllData)
+// 		);
+// 	}
+// 	if (routeController.getById) {
+// 		app.get(
+// 			`/testApi/${routeName}/getById`,
+// 			makeHandlerAwareOfAsyncErrors(routeController.getById)
+// 		);
+// 	}
+// 	if (routeController.create) {
+// 		app.post(
+// 			`/testApi/${routeName}/create`,
+// 			makeHandlerAwareOfAsyncErrors(routeController.create)
+// 		);
+//   }
+//   if (routeController.update) {
+// 		app.post(
+// 			`/testApi/${routeName}/update`,
+// 			makeHandlerAwareOfAsyncErrors(routeController.update)
+// 		);
+//   }
+//   if (routeController.del) {
+// 		app.post(
+// 			`/testApi/${routeName}/del`,
+// 			makeHandlerAwareOfAsyncErrors(routeController.del)
+// 		);
+// 	}
 
-	if (routeController.getBarData) {
-		app.get(
-			`/testApi/${routeName}/getBarData`,
-			makeHandlerAwareOfAsyncErrors(routeController.getBarData)
-		);
-	}
+// 	if (routeController.getBarData) {
+// 		app.get(
+// 			`/testApi/${routeName}/getBarData`,
+// 			makeHandlerAwareOfAsyncErrors(routeController.getBarData)
+// 		);
+// 	}
 
-	if (routeController.getBarData) {
-		app.get(
-			`/testApi/${routeName}/getBarData`,
-			makeHandlerAwareOfAsyncErrors(routeController.getBarData)
-		);
-	}
+// 	if (routeController.getBarData) {
+// 		app.get(
+// 			`/testApi/${routeName}/getBarData`,
+// 			makeHandlerAwareOfAsyncErrors(routeController.getBarData)
+// 		);
+// 	}
 
-	if (routeController.getBarLineData) {
-		app.get(
-			`/testApi/${routeName}/getBarLineData`,
-			makeHandlerAwareOfAsyncErrors(routeController.getBarLineData)
-		);
-	}
+// 	if (routeController.getBarLineData) {
+// 		app.get(
+// 			`/testApi/${routeName}/getBarLineData`,
+// 			makeHandlerAwareOfAsyncErrors(routeController.getBarLineData)
+// 		);
+// 	}
 
-	if (routeController.getLineData) {
-		app.get(
-			`/testApi/${routeName}/getLineData`,
-			makeHandlerAwareOfAsyncErrors(routeController.getLineData)
-		);
-	}
+// 	if (routeController.getLineData) {
+// 		app.get(
+// 			`/testApi/${routeName}/getLineData`,
+// 			makeHandlerAwareOfAsyncErrors(routeController.getLineData)
+// 		);
+// 	}
 
-	if (routeController.getPieData) {
-		app.get(
-			`/testApi/${routeName}/getPieData`,
-			makeHandlerAwareOfAsyncErrors(routeController.getPieData)
-		);
-	}
-	if (routeController.optionsList) {
-		app.get(
-			`/testApi/${routeName}/optionsList`,
-			makeHandlerAwareOfAsyncErrors(routeController.optionsList)
-		);
-	}
-	if (routeController.options) {
-		app.get(
-			`/testApi/${routeName}/options`,
-			makeHandlerAwareOfAsyncErrors(routeController.options)
-		);
-	}
-	if (routeController.getOptionsData) {
-		app.get(
-			`/testApi/${routeName}/getOptionsData`,
-			makeHandlerAwareOfAsyncErrors(routeController.getOptionsData)
-		);
-	}
-	if (routeController.treeData) {
-		app.get(
-			`/testApi/${routeName}/treeData`,
-			makeHandlerAwareOfAsyncErrors(routeController.treeData)
-		);
-	}
-	if (routeController.getTreeChild) {
-		app.get(
-			`/testApi/${routeName}/getTreeChild`,
-			makeHandlerAwareOfAsyncErrors(routeController.getTreeChild)
-		);
-	}
-	if (routeController.addNode) {
-		app.post(
-			`/testApi/${routeName}/addNode`,
-			makeHandlerAwareOfAsyncErrors(routeController.addNode)
-		);
-	}
-	// if (routeController.update) {
-	// 	app.put(
-	// 		`/api/${routeName}/:id`,
-	// 		makeHandlerAwareOfAsyncErrors(routeController.update)
-	// 	);
-	// }
-	// if (routeController.remove) {
-	// 	app.delete(
-	// 		`/api/${routeName}/:id`,
-	// 		makeHandlerAwareOfAsyncErrors(routeController.remove)
-	// 	);
-	// }
-}
+// 	if (routeController.getPieData) {
+// 		app.get(
+// 			`/testApi/${routeName}/getPieData`,
+// 			makeHandlerAwareOfAsyncErrors(routeController.getPieData)
+// 		);
+// 	}
+// 	if (routeController.optionsList) {
+// 		app.get(
+// 			`/testApi/${routeName}/optionsList`,
+// 			makeHandlerAwareOfAsyncErrors(routeController.optionsList)
+// 		);
+// 	}
+// 	if (routeController.options) {
+// 		app.get(
+// 			`/testApi/${routeName}/options`,
+// 			makeHandlerAwareOfAsyncErrors(routeController.options)
+// 		);
+// 	}
+// 	if (routeController.getOptionsData) {
+// 		app.get(
+// 			`/testApi/${routeName}/getOptionsData`,
+// 			makeHandlerAwareOfAsyncErrors(routeController.getOptionsData)
+// 		);
+// 	}
+// 	if (routeController.treeData) {
+// 		app.get(
+// 			`/testApi/${routeName}/treeData`,
+// 			makeHandlerAwareOfAsyncErrors(routeController.treeData)
+// 		);
+// 	}
+// 	if (routeController.getTreeChild) {
+// 		app.get(
+// 			`/testApi/${routeName}/getTreeChild`,
+// 			makeHandlerAwareOfAsyncErrors(routeController.getTreeChild)
+// 		);
+// 	}
+// 	if (routeController.addNode) {
+// 		app.post(
+// 			`/testApi/${routeName}/addNode`,
+// 			makeHandlerAwareOfAsyncErrors(routeController.addNode)
+// 		);
+// 	}
+// 	// if (routeController.update) {
+// 	// 	app.put(
+// 	// 		`/api/${routeName}/:id`,
+// 	// 		makeHandlerAwareOfAsyncErrors(routeController.update)
+// 	// 	);
+// 	// }
+// 	// if (routeController.remove) {
+// 	// 	app.delete(
+// 	// 		`/api/${routeName}/:id`,
+// 	// 		makeHandlerAwareOfAsyncErrors(routeController.remove)
+// 	// 	);
+// 	// }
+// }
 
   
-//   app.get('/hello', function (req, res) {
-//       console.log('------/hello-----', new Date().getTime())
-//       res.json({a: 123321})
-//   });
+// //   app.get('/hello', function (req, res) {
+// //       console.log('------/hello-----', new Date().getTime())
+// //       res.json({a: 123321})
+// //   });
 
-//   app.get('/getUserById', function (req, res) {
-//     console.log('------/hello-----', new Date().getTime())
-//     res.json({a: 123321})
-// });
+// //   app.get('/getUserById', function (req, res) {
+// //     console.log('------/hello-----', new Date().getTime())
+// //     res.json({a: 123321})
+// // });
  
-app.listen(8019, ()=>{
-    console.log("8019");
+app.listen(8018, ()=>{
+    console.log("8018");
 })
