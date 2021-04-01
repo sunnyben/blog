@@ -52,7 +52,7 @@ module.exports = {
     tbTest: './launchWx/tbTest.js',
     jdTest: './launchWx/jdTest.js',
     zfbTest: './launchWx/zfbTest.js',
-    feishuSign: './launchWx/feishuSign.js',
+    fsdd: './launchWx/feishuSign.js',
   },
   output: {
     filename: resBaseUrl + 'js/[name].bundle.js?v=' + new Date().getTime(),

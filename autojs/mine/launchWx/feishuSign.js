@@ -1,17 +1,23 @@
 import {
   clickSelectorCenter, swipeToFindWidget, clickCenter,
   registEvent, doubleClickLocation, unlockMiui,
-  closeAllApp, deviceInfoLog, checkHoliday
+  closeAllApp, deviceInfoLog, checkHoliday,
+  widgetExist,
 } from './utils'
 
 toast("开始执行脚本");
 registEvent()
 
+// sleep(500);
+// const aaa = widgetExist(text('下班打卡'))
+// toast("aaa--" + aaa);
+// exit()
+
 sleep(500);
 unlockMiui()
 
 const isHoliday = checkHoliday()
-if(isHoliday) {
+if (isHoliday) {
   sleep(2000);
   toast("非工作日，脚本终止执行");
   exit()
@@ -89,11 +95,11 @@ const toAppPageSign = () => {
   id("com.ss.android.lark:id/app_center_tab").waitFor()
   clickSelectorCenter(id("com.ss.android.lark:id/app_center_tab"))
 
-  sleep(2000);
+  sleep(1000);
   // const target = swipeToFindWidget(text('打卡'), 15, -1)
 
-  toast("daka" + text("打卡").exists());
-  if (text("打卡").exists()) {
+  toast("daka" + widgetExist(text("打卡")));
+  if (widgetExist(text("打卡"))) {
     sleep(1000);
     // clickSelectorCenter(text("打卡"))
     click("打卡")
@@ -116,15 +122,19 @@ const makeSure = () => {
 const toSign = (typeStr = '上班') => {
   sleep(5000);
   // 点击上下班打卡
-  if (text(typeStr + "打卡").exists()) {
+  toast(typeStr + "打卡" + widgetExist(text(typeStr + "打卡")));
+  // if (text(typeStr + "打卡").exists()) {
+  widgetExist
+  if (widgetExist(text(typeStr + "打卡"))) {
     sleep(1000);
     clickSelectorCenter(text(typeStr + "打卡"))
     makeSure()
   } else {
-    text("更新打卡").waitFor()
-    toast('更新打卡' + text("更新打卡").exists());
+    // text("更新打卡").waitFor()
+    sleep(1000);
+    toast('更新打卡' + widgetExist(text("更新打卡")));
     // 更新打卡
-    if (text("更新打卡").exists()) {
+    if (widgetExist(text("更新打卡"))) {
       sleep(1000);
       clickSelectorCenter(text("更新打卡"))
       makeSure()
@@ -140,7 +150,7 @@ toAppPageSign()
 
 const currentHour = new Date().getHours()
 let signType = '下班'
-if(currentHour < 13) {
+if (currentHour < 12) {
   signType = '上班'
 }
 

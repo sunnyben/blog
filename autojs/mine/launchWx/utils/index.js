@@ -214,3 +214,18 @@ export const checkHoliday = () => {
   }
   return false
 }
+
+// 循环判断控件是否存在
+export const widgetExist = (widget, times = 10, interval = 500) => {
+  let isExist = false
+  let curTime = 0
+  while(!(isExist || curTime > times)) {
+    const flag = widget.exists()
+    if(flag) {
+      isExist = true
+    }
+    curTime++
+    sleep(interval)
+  }
+  return isExist
+}
